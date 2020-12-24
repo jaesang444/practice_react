@@ -14,8 +14,8 @@ function ListSection({data2}) {
   return (
     <ul>
       {
-        data2.map(sectionObj =>(
-          <Section sectionObj={sectionObj} />
+        data2.map((sectionObj, idx) =>(
+          <Section sectionObj={sectionObj} key={idx} />
         ))
       }
     </ul>

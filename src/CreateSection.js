@@ -1,8 +1,11 @@
 import React from 'react';
 
-function CreateSection() {
+function CreateSection({onClickAddSection, onChangeSection}) {
   return (
-    <button>+ add section</button>
+    <>
+      <input placeholder='섹션 추가' onChange={onChangeSection}/>
+      <button onClick={onClickAddSection}>+ add section</button>
+    </>
   )
 }
 

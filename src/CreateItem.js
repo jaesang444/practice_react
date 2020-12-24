@@ -1,8 +1,12 @@
 import React from 'react';
 
-function CreateItem() {
+function CreateItem({onClickAddItem,onChangeInput,inputs, idx}) {
   return (
-    <h1>Create Item</h1>
+    <>
+      <input name="main" value={inputs[idx]['main']} placeholder='제목' onChange={onChangeInput} id={idx}/>
+      <input name="sub" value={inputs[idx]['sub']} placeholder='내용' onChange={onChangeInput} id={idx}/>
+      <button onClick={()=>onClickAddItem(idx)}>Create Item</button>
+    </>
   )
 }
 

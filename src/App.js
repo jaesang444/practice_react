@@ -15,7 +15,7 @@ function App() {
           { main : 'General #4' , sub : 'Explanation of General #4' },
           { main : 'General #5' , sub : 'Explanation of General #5' },
           { main : 'General #6' , sub : 'Explanation of General #6' },
-        ]
+        ],
       },
       {
         'Stand-up': [
@@ -58,6 +58,59 @@ function App() {
       },
     ]
   );
+  const [section,setSection] = useState('');
+  const [input,setInput] = useState([
+    { main: '', sub: '' },
+    { main: '', sub: '' },
+    { main: '', sub: '' },
+    { main: '', sub: '' },
+    { main: '', sub: '' },
+  ]);
+  const inputs = [
+    { main: '', sub: '' },
+    { main: '', sub: '' },
+    { main: '', sub: '' },
+    { main: '', sub: '' },
+    { main: '', sub: '' },
+  ]
+  const onClickChangeItem = ()=>{}
+  const onClickChangeColor = () => {}
+
+  // const addData = (addValue) => {
+  //   setData2((prevValue) => ([
+  //     ...prevValue,
+  //     addValue,
+  //   ])
+  //   );
+  // };
+
+  const onChangeSection = e => {
+    setSection(e.target.value);
+  }
+  const onClickAddSection = () => {
+    const newSection = {
+      [ section ] : []
+    }
+    setData2(data2=>[...data2, newSection]);
+    setInput(input=>[...input, { main : '', sub : ''}]);
+  } //input에도 새 배열 만들어야
+
+  const onChangeInput = e => {
+    const {name, value, id} = e.target;
+    console.log(name,value,id);
+    const newInput = [...input];
+    newInput[id][name]=value;
+    console.log(newInput);
+    // setInput([...input].map,
+    //   input[id][name] = value
+    // ])
+    setInput(newInput);
+  }
+  const onClickAddItem = idx => {
+    console.log(idx);
+  }
+
+
   return (
     <div className="App">
       <div className="top">Team.Workspace</div>
@@ -65,11 +118,19 @@ function App() {
         <div className="bottom-left">
           <div className="member">21 members</div>
           <ListSection data2={data2} />
-          <CreateSection />
+          <CreateSection
+            onClickAddSection={onClickAddSection}
+            onChangeSection={onChangeSection}
+          />
         </div>
-        <div class="bottom-right" id="bottom-right">
+        <div className="bottom-right" id="bottom-right">
           <h1>All board</h1>
-          <BoardSection data2={data2} />
+          <BoardSection
+            onClickAddItem={onClickAddItem}
+            onChangeInput={onChangeInput}
+            data2={data2}
+            inputs={inputs}
+          />
         </div>
       </div>
     </div>

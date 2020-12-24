@@ -4,9 +4,9 @@ function ListDescription({desc}) {
   return (
     <ul className="items">
       {
-        desc.map(e => (
-          <button className="plain">
-            <li>{e.main}</li>
+        desc.map((item, idx) => (
+          <button className="plain" key={idx}>
+            <li>{item.main}</li>
           </button>
         ))
       }
