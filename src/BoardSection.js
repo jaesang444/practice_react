@@ -2,7 +2,7 @@ import React from 'react';
 import BoardItems from './BoardItems';
 import CreateItem from './CreateItem';
 
-function BoardSection({onClickAddItem, onChangeInput, data2, inputs}){
+function BoardSection({onClickAddItem, onChangeInput, data2, input}){
   return (
     <ul className='items'>
       {
@@ -13,7 +13,7 @@ function BoardSection({onClickAddItem, onChangeInput, data2, inputs}){
             <CreateItem
               onClickAddItem={onClickAddItem}
               onChangeInput={onChangeInput}
-              inputs={inputs}
+              input={input}
               idx={idx}
               key={idx}
             />

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback, useRef} from 'react';
 import './App.css';
 import ListSection from './ListSection';
 import CreateSection from './CreateSection';
@@ -66,61 +66,65 @@ function App() {
     { main: '', sub: '' },
     { main: '', sub: '' },
   ]);
-  const inputs = [
-    { main: '', sub: '' },
-    { main: '', sub: '' },
-    { main: '', sub: '' },
-    { main: '', sub: '' },
-    { main: '', sub: '' },
-  ]
-  const onClickChangeItem = ()=>{}
-  const onClickChangeColor = () => {}
+  const paintItem = React.createRef();
+  // const onChangeInput2 = () => {
+  //
+  // }
+  //
+  // const onClickChangeItem = () =>{
+  //
+  // }
 
-  // const addData = (addValue) => {
-  //   setData2((prevValue) => ([
-  //     ...prevValue,
-  //     addValue,
-  //   ])
-  //   );
-  // };
-
-  const onChangeSection = e => {
-    setSection(e.target.value);
+  const onClickChangeColor = e => {
+    setTimeout(() => e.target.className='a', 0);
+    setTimeout(() => e.target.className='b', 1000);
+    //setTimeout paintItem
   }
+
+  const onChangeSection = useCallback (e => {
+      setSection(e.target.value);
+    }, []
+  )
+
   const onClickAddSection = () => {
-    const newSection = {
-      [ section ] : []
+      const newSection = {
+        [ section ] : []
+      }
+      setData2(data2=>[...data2, newSection]);
+      setInput(input=>[...input, { main : '', sub : ''}]);
+      setSection('');
     }
-    setData2(data2=>[...data2, newSection]);
-    setInput(input=>[...input, { main : '', sub : ''}]);
-  } //input에도 새 배열 만들어야
 
   const onChangeInput = e => {
     const {name, value, id} = e.target;
-    console.log(name,value,id);
+    const newId = (id[0] === 'm') ? id.substring(4, id.length) : id.substring(3,id.length);
     const newInput = [...input];
-    newInput[id][name]=value;
-    console.log(newInput);
-    // setInput([...input].map,
-    //   input[id][name] = value
-    // ])
+    newInput[newId][name]=value;
     setInput(newInput);
   }
-  const onClickAddItem = idx => {
-    console.log(idx);
-  }
 
+  const onClickAddItem = idx => {
+    const {main, sub} = input[idx];
+    const newData = [...data2];
+    newData[idx][Object.keys(newData[idx])[0]].push({main,sub});
+    setData2(newData);
+    const newInput = [...input];
+    newInput[idx]['main'] = '';
+    newInput[idx]['sub']='';
+    setInput(newInput);
+  }
 
   return (
     <div className="App">
-      <div className="top">Team.Workspace</div>
+      <div className="top" >Team.Workspace</div>
       <div className="bottom">
         <div className="bottom-left">
           <div className="member">21 members</div>
-          <ListSection data2={data2} />
+          <ListSection data2={data2} onClickChangeColor={onClickChangeColor} />
           <CreateSection
             onClickAddSection={onClickAddSection}
             onChangeSection={onChangeSection}
+            section={section}
           />
         </div>
         <div className="bottom-right" id="bottom-right">
@@ -129,7 +133,7 @@ function App() {
             onClickAddItem={onClickAddItem}
             onChangeInput={onChangeInput}
             data2={data2}
-            inputs={inputs}
+            input={input}
           />
         </div>
       </div>
